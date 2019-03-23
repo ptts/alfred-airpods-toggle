@@ -13,7 +13,7 @@ brew install switchaudio-osx
 ```
 
 # Requirements
-Homebrew
-BluetoothConnector
-SwitchAudioSource
+- Homebrew
+- BluetoothConnector
+- SwitchAudioSource
 

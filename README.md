@@ -11,6 +11,10 @@
 brew install bluetoothconnector
 brew install switchaudio-osx
 ```
+3. Download & Install Workflow
+```
+cd $TMPDIR && curl -OL "https://github.com/ptts/alfred-airpods/raw/master/AirPods.alfredworkflow" && open -a "/Applications/Alfred 3.app" "$TMPDIR"AirPods.alfredworkflow
+```
 
 # Auto Install
 You can autoinstall all requirements and the Workflow itself by pasting the following code into your Terminal:

@@ -21,7 +21,7 @@ You can autoinstall all requirements and the Workflow itself by pasting the foll
 ```
 bash <(curl -s https://raw.githubusercontent.com/ptts/alfred-airpods/master/autoinstall.sh)
 ```
-WARNING: Do this at your own risk and check out the script before you run it.
+WARNING: Do this at your own risk and check out [the script](https://raw.githubusercontent.com/ptts/alfred-airpods/master/autoinstall.sh) before you run it.
 
 # Requirements
 - Homebrew

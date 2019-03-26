@@ -1,6 +1,7 @@
 # alfred-airpods
 
 A smart workflow that toggles the connection to your AirPods with *no setup required*.
+
 ![Alfred Smart AirPods Toggle](https://github.com/ptts/alfred-airpods/blob/master/images/alfred_airpods.gif)
 
 ### Requirements

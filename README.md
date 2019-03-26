@@ -35,7 +35,7 @@ bash <(curl -s https://raw.githubusercontent.com/ptts/alfred-airpods/master/auto
 
 ### How it works
 - First, a python script parses the output of running ```bluetoothconnector``` (which outputs a list of all paired bluetooth devices and their MAC address) using Regex and outputs all connected devices and their corresponding MAC addresses in a dictionary. The first item that contains the string "AirPods" is used for the consequent connection/disconnection process and passed to the bash script.
-!['bluetoothconnector' output](https://i.imgur.com/cPZXEsH.jpg)
+!['bluetoothconnector' output](https://github.com/ptts/alfred-airpods/blob/master/images/alfred_bluetoothconnector.jpg)
 
 - The bash script then first checks whether the AirPods are currently used as the system output by using the ```SwitchAudioSource -c``` command.
 → If yes, it switches the audio output to the "Internal Speakers" and mutes the system. (To prevent accidentally disconnecting your AirPods and blasting videos on full volume.

@@ -1,18 +1,40 @@
 #!/bin/bash
 
 # Install Homebrew
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+if [[ $(command -v brew) == "" ]]; then
+        echo "[...] Installing Homebrew.. "
+        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    else
+        echo "[✓] Homebrew already installed. Updating.. "
+        brew update
+        brew upgrade
+fi;
 
-# Update / Upgrade Homebrew
-/usr/local/bin/brew update
-/usr/local/bin/brew upgrade
+# Install requirements
+if [[ $(command -v bluetoothconnector) == "" ]]; then
+        echo "[...] Installing bluetoothconnector.. "
+        brew install bluetoothconnector
+    else
+        echo "[✓] bluetoothconnector already installed."
+fi;
 
-# Install required packages
-brew install bluetoothconnector
-brew install switchaudio-osx
+if [[ $(command -v SwitchAudioSource) == "" ]]; then
+        echo "[...] Installing switchaudio-osx.. "
+        brew install switchaudio-osx
+        echo "[✓] switchaudio-osx installed"
+    else
+        echo "[✓] switchaudio-osx already installed"
+fi;
 
-# Download and install workflow
-cd $TMPDIR && curl -OL "https://github.com/ptts/alfred-airpods/raw/master/AirPods.alfredworkflow" && open -a "/Applications/Alfred 3.app" "$TMPDIR"AirPods.alfredworkflow
+# Install workflow
+if [[ ! $(command -v brew) == "" ]] && [[ ! $(command -v bluetoothconnector) == "" ]] && [[ ! $(command -v SwitchAudioSource) == "" ]]; then
+    echo "[✓] All requirements installed"
+    echo "[...] Installing workflow..."
+    cd $TMPDIR
+    curl -OLs "https://github.com/ptts/alfred-airpods/raw/master/AirPods.alfredworkflow" && open -a "/Applications/Alfred 3.app" "$TMPDIR"AirPods.alfredworkflow
+    echo "[✓] DONE. Workflow installed"
+else
+    echo "[X] Installation failed. Requirements not found."
+fi;
 
-# DONE
-echo "All done."
+

@@ -24,6 +24,8 @@ cd $TMPDIR && curl -OL "https://github.com/ptts/alfred-airpods/raw/master/AirPod
 Or manually by downloading the workflow [here](https://github.com/ptts/alfred-airpods/blob/master/AirPods.alfredworkflow?raw=true).
 
 #### Auto Install
+![Auto Install](https://raw.githubusercontent.com/ptts/alfred-airpods/master/images/auto_install.gif)
+
 You can autoinstall all requirements and the Workflow itself by pasting the following code into your Terminal:
 ```
 bash <(curl -s https://raw.githubusercontent.com/ptts/alfred-airpods/master/autoinstall.sh)

@@ -82,4 +82,3 @@ if _exists SwitchAudioSource && _exists SwitchAudioSource && _exists SwitchAudio
 else
     log_error "[X] Installation failed. Requirements not found."
 fi;
-

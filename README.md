@@ -2,9 +2,9 @@
 
 A smart workflow that toggles the connection to your AirPods with *no setup required*.
 
-Download: [Download current version](https://github.com/ptts/alfred-airpods-toggle/blob/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow?raw=true)
+Download: [Download current version](https://github.com/ptts/alfred-airpods-toggle/raw/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow)
 
-![Alfred Smart AirPods Toggle](https://github.com/ptts/alfred-airpods-toggle/blob/master/images/alfred_airpods.gif)
+![Alfred Smart AirPods Toggle](https://raw.githubusercontent.com/ptts/alfred-airpods-toggle/master/images/alfred_airpods.gif)
 
 ### Requirements
 - Homebrew
@@ -23,7 +23,7 @@ brew install switchaudio-osx
 ```
 3. Download & Install the Workflow
 ```
-cd $TMPDIR && curl -OL "https://github.com/ptts/alfred-airpods-toggle/blob/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow?raw=true" && open -a "/Applications/Alfred 3.app" "$TMPDIR""/AirPods Toggle.alfredworkflow.alfredworkflow"
+curl -Ls "https://github.com/ptts/alfred-airpods-toggle/raw/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow" > "$TMPDIR""AirPods Toggle.alfredworkflow" && open -a "/Applications/Alfred 3.app" "$TMPDIR""AirPods Toggle.alfredworkflow"
 ```
 Or manually by downloading the workflow [here](https://github.com/ptts/alfred-airpods-toggle/blob/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow?raw=true).
 
@@ -38,7 +38,7 @@ bash <(curl -s https://raw.githubusercontent.com/ptts/alfred-airpods-toggle/mast
 
 ### How it works
 - First, a python script parses the output of running ```bluetoothconnector``` (which outputs a list of all paired bluetooth devices and their MAC address) using Regex and outputs all connected devices and their corresponding MAC addresses in a dictionary. The first item that contains the string "AirPods" is used for the consequent connection/disconnection process and passed to the bash script.
-!['bluetoothconnector' output](https://github.com/ptts/alfred-airpods-toggle/blob/master/images/alfred_bluetoothconnector.jpg)
+!['bluetoothconnector' output](https://raw.githubusercontent.com/ptts/alfred-airpods-toggle/master/images/alfred_bluetoothconnector.jpg)
 
 - The bash script then first checks whether the AirPods are currently used as the system output by using the ```SwitchAudioSource -c``` command.
 → If yes, it switches the audio output to the "Internal Speakers" and mutes the system. (To prevent accidentally disconnecting your AirPods and blasting videos on full volume.

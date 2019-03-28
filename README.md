@@ -25,7 +25,7 @@ brew install switchaudio-osx
 ```
 curl -Ls "https://github.com/ptts/alfred-airpods-toggle/raw/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow" > "$TMPDIR""AirPods Toggle.alfredworkflow" && open -a "/Applications/Alfred 3.app" "$TMPDIR""AirPods Toggle.alfredworkflow"
 ```
-Or manually by downloading the workflow [here](https://github.com/ptts/alfred-airpods-toggle/blob/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow?raw=true).
+Or manually by downloading the workflow [here](https://github.com/ptts/alfred-airpods-toggle/raw/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow).
 
 #### Auto Install
 ![Auto Install](https://raw.githubusercontent.com/ptts/alfred-airpods-toggle/master/images/auto_install.gif)

@@ -1,8 +1,9 @@
 # alfred-airpods-toggle
 
 A smart workflow that toggles the connection to your AirPods with *no setup required*.
+Download: [Download current version](https://github.com/ptts/alfred-airpods-toggle/blob/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow?raw=true)
 
-![Alfred Smart AirPods Toggle](https://github.com/ptts/alfred-airpods/blob/master/images/alfred_airpods.gif)
+![Alfred Smart AirPods Toggle](https://github.com/ptts/alfred-airpods-toggle/blob/master/images/alfred_airpods.gif)
 
 ### Requirements
 - Homebrew
@@ -21,22 +22,22 @@ brew install switchaudio-osx
 ```
 3. Download & Install the Workflow
 ```
-cd $TMPDIR && curl -OL "https://github.com/ptts/alfred-airpods/raw/master/AirPods.alfredworkflow" && open -a "/Applications/Alfred 3.app" "$TMPDIR"AirPods.alfredworkflow
+cd $TMPDIR && curl -OL "https://github.com/ptts/alfred-airpods-toggle/blob/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow?raw=true" && open -a "/Applications/Alfred 3.app" "$TMPDIR""/AirPods Toggle.alfredworkflow.alfredworkflow"
 ```
-Or manually by downloading the workflow [here](https://github.com/ptts/alfred-airpods/blob/master/AirPods.alfredworkflow?raw=true).
+Or manually by downloading the workflow [here](https://github.com/ptts/alfred-airpods-toggle/blob/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow?raw=true).
 
 #### Auto Install
-![Auto Install](https://raw.githubusercontent.com/ptts/alfred-airpods/master/images/auto_install.gif)
+![Auto Install](https://raw.githubusercontent.com/ptts/alfred-airpods-toggle/master/images/auto_install.gif)
 
 You can autoinstall all requirements and the Workflow itself by pasting the following code into your Terminal:
 ```
 bash <(curl -s https://raw.githubusercontent.com/ptts/alfred-airpods/master/autoinstall.sh)
 ```
-**WARNING**: Do this at your own risk and check out [the script](https://raw.githubusercontent.com/ptts/alfred-airpods/master/autoinstall.sh) before you run it. For me the script also works fine even if you already have homebrew and the two dependencies installed. In this case it will just check for updates and then install the workflow.
+**WARNING**: Do this at your own risk and check out [the script](https://raw.githubusercontent.com/ptts/alfred-airpods-toggle/master/autoinstall.sh) before you run it. For me the script also works fine even if you already have homebrew and the two dependencies installed. In this case it will just check for updates and then install the workflow.
 
 ### How it works
 - First, a python script parses the output of running ```bluetoothconnector``` (which outputs a list of all paired bluetooth devices and their MAC address) using Regex and outputs all connected devices and their corresponding MAC addresses in a dictionary. The first item that contains the string "AirPods" is used for the consequent connection/disconnection process and passed to the bash script.
-!['bluetoothconnector' output](https://github.com/ptts/alfred-airpods/blob/master/images/alfred_bluetoothconnector.jpg)
+!['bluetoothconnector' output](https://github.com/ptts/alfred-airpods-toggle/blob/master/images/alfred_bluetoothconnector.jpg)
 
 - The bash script then first checks whether the AirPods are currently used as the system output by using the ```SwitchAudioSource -c``` command.
 → If yes, it switches the audio output to the "Internal Speakers" and mutes the system. (To prevent accidentally disconnecting your AirPods and blasting videos on full volume.

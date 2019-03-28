@@ -71,7 +71,8 @@ if _exists SwitchAudioSource && _exists SwitchAudioSource && _exists SwitchAudio
     log_success "[✓] All requirements installed"
     log "[...] Installing workflow"
     cd $TMPDIR
-    curl -OLs "https://github.com/ptts/alfred-airpods-toggle/blob/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow?raw=true" && open -a "/Applications/Alfred 3.app" "$TMPDIR""AirPods Toggle.alfredworkflow"
+    curl -Ls "https://github.com/ptts/alfred-airpods-toggle/raw/master/AirPods%20Toggle/source/AirPods%20Toggle.alfredworkflow" > "$TMPDIR""AirPods Toggle.alfredworkflow"
+    open -a "/Applications/Alfred 3.app" "$TMPDIR""AirPods Toggle.alfredworkflow"
     if [ $? -eq 0 ]; then
         log_success "[✓] AirPods Workflow successfully installed."
         log_success "[✓] ALL DONE"

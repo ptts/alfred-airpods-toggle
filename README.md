@@ -32,7 +32,7 @@ Or manually by downloading the workflow [here](https://github.com/ptts/alfred-ai
 
 You can autoinstall all requirements and the Workflow itself by pasting the following code into your Terminal:
 ```
-bash <(curl -s https://raw.githubusercontent.com/ptts/alfred-airpods/master/autoinstall.sh)
+bash <(curl -s https://raw.githubusercontent.com/ptts/alfred-airpods-toggle/master/autoinstall.sh)
 ```
 **WARNING**: Do this at your own risk and check out [the script](https://raw.githubusercontent.com/ptts/alfred-airpods-toggle/master/autoinstall.sh) before you run it. For me the script also works fine even if you already have homebrew and the two dependencies installed. In this case it will just check for updates and then install the workflow.
 

@@ -26,6 +26,11 @@ function log_error() { # $1 = string
     printf "${COLOR}$1${NC}\n"
 }
 
+
+log "This script will install the Alfred workflow 'AirPods Toggle‘ and all required dependencies. (if necessary)"
+read -p "Press enter to continue...\n"
+
+echo
 if _exists brew; then
     log_success "[✓] Homebrew already installed. Updating.. "
     brew update

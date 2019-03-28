@@ -28,7 +28,7 @@ function log_error() { # $1 = string
 
 echo
 log "This script will install the Alfred workflow 'AirPods Toggle‘ and all required dependencies. (if necessary)"
-read -p "Press enter to continue..."
+read -p "Press ENTER to continue or 'CTRL + C' to abort"
 echo
 
 if _exists brew; then

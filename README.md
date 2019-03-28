@@ -1,4 +1,4 @@
-# alfred-airpods
+# alfred-airpods-toggle
 
 A smart workflow that toggles the connection to your AirPods with *no setup required*.
 

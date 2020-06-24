@@ -1,0 +1,161 @@
+#!/bin/bash
+
+
+###################################
+############## SETUP ##############
+
+# Set AirPods Mac address *OR* AirPods name here *OR* leave both empty
+
+AIRPODS_MAC=""
+AIRPODS_NAME=""
+BUILT_IN_SPEAKER_NAME=""
+
+###################################
+
+
+
+# Functions
+
+_exists() {
+    # Returns True (Code 0) if a program exists, otherwise False (Code 1)
+    if command -v "$@" >/dev/null 2>&1; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+check_dependencies() {
+    if ! _exists "/usr/local/bin/SwitchAudioSource"; then
+        echo "ERROR: Missing dependency. Please install SwitchAudioSources via 'brew install switchaudio-osx'. Aborting."
+        exit 1
+    fi
+    if ! _exists "/usr/local/bin/BluetoothConnector"; then
+        echo "ERROR: Missing dependency. Please install BluetoothConnector via 'brew install bluetoothconnector'. Aborting."
+        exit 1
+    fi
+}
+
+check_variables() {
+    if [ -z "$AIRPODS_MAC" ] && [ -z "$AIRPODS_NAME" ] && [ -z "$BUILT_IN_SPEAKER_NAME" ]; then
+        # None of them are not set
+        # Auto grab name and mac via python script
+        AIRPODS_NAME=$(/usr/bin/env python2 airpods_finder.py --airpods --limit 1 --name-only)
+        AIRPODS_MAC=$(/usr/bin/env python2 airpods_finder.py --airpods --limit 1 --mac-only)
+	    BUILT_IN_SPEAKER_NAME=$(system_profiler SPAudioDataType| grep -A 1 Built-in | grep Output | awk -F ':' {'print $2'}| sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+        # Check if one of them is still empty:
+        if [ -z "$AIRPODS_MAC" ] || [ -z "$AIRPODS_NAME" ]; then
+            echo "ERROR: Could not find AirPods automatically. Please manually set name or MAC address in settings."
+            exit 1
+        fi
+    elif [ -n "$AIRPODS_MAC" ] && [ -n "$AIRPODS_NAME" ]; then
+        # Both are set
+        # IGNORE name
+        # Use MAC to grab device name (to ensure correct spelling)
+        AIRPODS_NAME=$(/usr/bin/env python2 airpods_finder.py --mac "$AIRPODS_MAC" --name-only)
+		# Check if one of them is still empty:
+        if [ -z "$AIRPODS_MAC" ] || [ -z "$AIRPODS_NAME" ]; then
+            echo "ERROR: Could not find your AirPods. Please check the MAC address you've set."
+            exit 1
+        fi
+    elif [ -n "$AIRPODS_MAC" ]; then
+        # Only Mac Address is set
+        # Same as above: Use MAC to grab device name
+        AIRPODS_NAME=$(/usr/bin/env python2 airpods_finder.py --name "$AIRPODS_MAC" --name-only)
+
+        # Check if one of them is still empty:
+        if [ -z "$AIRPODS_MAC" ] || [ -z "$AIRPODS_NAME" ]; then
+            echo "ERROR: Could not find your AirPods. Please check the MAC address you've set."
+            exit 1
+        fi
+    else
+        # Only name is set
+        # First: get mac address for name
+        # Second: get name for mac address
+        AIRPODS_MAC=$(/usr/bin/env python2 airpods_finder.py --name "$AIRPODS_NAME" --mac-only)
+        AIRPODS_NAME=$(/usr/bin/env python2 airpods_finder.py --mac "$AIRPODS_MAC" --name-only)
+        # Check if one of them is still empty:
+        if [ -z "$AIRPODS_MAC" ] || [ -z "$AIRPODS_NAME" ]; then
+            echo "ERROR: Could not find your AirPods. Please check the device name you've set."
+            exit 1
+        fi
+    fi
+}
+
+
+connect_airpods () {
+    # Connect to AirPods via Bluetooth
+    /usr/local/bin/BluetoothConnector -c $AIRPODS_MAC &> /dev/null
+}
+
+airpods_are_active() {
+    # Checks if Output is currently set to AirPods
+    /usr/local/bin/SwitchAudioSource -c "$AIRPODS_NAME" | grep "$AIRPODS_NAME" &> /dev/null
+}
+
+activate_airpods () {
+    # Switch Audio Output to AirPods and set volume to 70%
+    /usr/local/bin/SwitchAudioSource -s "$AIRPODS_NAME" | grep 'output audio device set to' &> /dev/null
+    if airpods_are_active; then
+        /usr/bin/osascript -e 'set volume output volume 70'
+    fi
+}
+
+disconnect_airpods() {
+    # Sets output to build in output
+    /usr/local/bin/SwitchAudioSource -s "$BUILT_IN_SPEAKER_NAME" | grep "$AIRPODS_NAME" &> /dev/null
+}
+
+mute_output() {
+    # Mutes system output
+     /usr/bin/osascript -e 'set volume output muted true'
+}
+
+####################################################################################
+####################################################################################
+####################################################################################
+
+check_dependencies
+check_variables
+
+
+if airpods_are_active; then
+    disconnect_airpods
+    echo -n "$BUILT_IN_SPEAKER_NAME disconnect_success"
+    exit
+else
+    # Connect and activate
+    connect_airpods
+    activate_airpods
+    # Check if connection was successful...
+    if airpods_are_active; then
+        echo -n "connect_success"
+        exit 0
+    fi
+    # ERROR: Connection was not successful.
+    # Retry #1:
+    # Connect to AirPods...
+    connect_airpods
+    # Wait for 5 seconds...
+    sleep 5
+    # Switch Output to AirPods...
+    activate_airpods
+    if airpods_are_active; then
+        echo -n "connect_success"
+        exit 0
+    fi
+    # ERROR: Connection was not successful.
+    # Retry #2:
+    # Connect to AirPods...
+    connect_airpods
+    # Wait for 7 seconds...
+    sleep 7
+    # Switch Output to AirPods...
+    activate_airpods
+    if airpods_are_active; then
+        echo -n "connect_success"
+        exit 0
+    fi
+    echo -n "connect_fail"
+    exit 1
+fi
